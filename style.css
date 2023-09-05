@@ -1,0 +1,423 @@
+*{
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --background-dark: #f8efe7;
+    --background-light: #ffffff;
+    --text-dark: #333333;
+    --text-light: #e3d5c3;
+    --primary-dark: #ee9574;
+    --primary-light: #01202b; 
+    --background-scrollbar-thumb: #ffcc80;
+    --background-scrollbar-track: #e3d5c3;
+;
+    
+}
+
+.lightTheme{
+    --background-dark: #f8efe7;
+    --background-light: #ffffff;
+    --text-dark: #333333;
+    --text-light: #e3d5c3;
+    --primary-dark: #ee9574;
+    --primary-light: #01202b; 
+}
+
+/* --background-dark: #f0f0f0;
+  --background-light: #ffffff;
+  --text-dark: #333333;
+  --text-light: #e0e0e0;
+  --primary-dark: #ffcc80;
+  --primary-light: #ff7043; */
+
+.neonTheme {
+    --background-dark: #2b2b2b;
+    --background-light: #ffffff;
+    --text-dark: snow;
+    --text-light: #333333;
+    --primary-dark: #13b1ba;
+    --primary-light: #83eef4;
+    --background-scrollbar-thumb: #424242;
+    --background-scrollbar-track: #363636;
+}
+
+body{
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+    height: auto;
+}
+
+
+.switch{
+    z-index: 1;
+    position: fixed;
+    top: 90%;
+    left: 93%;
+    background-color: transparent;
+}
+
+.switch .form-check{
+    background-color: transparent;
+}
+
+.switch .form-check input{
+    height: 30px;
+    width: 50px;
+    cursor: pointer;
+    background-color: var(--background-dark);
+    border: 2px solid var(--primary-light);
+}
+
+.agenda{
+    z-index: 0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    display: flex;
+    padding: 20px;
+    max-width: 1306px;
+}
+
+.agenda .cardOne{
+    background-color: transparent;
+    box-shadow: 3px 3px 25px var(--primary-light);
+    width: 590px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 30px 0px 0px 30px;
+}
+
+.agenda .cardOne h3{
+    position: relative;
+    top: 10px;
+    text-transform: uppercase; 
+    font-size: 25px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.cardOne .month{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.cardOne .month button{
+    background-color: transparent;
+}
+
+.cardOne .month button i{
+    color: var(--primary-light);
+}
+
+
+.agenda .cardOne .containerDay, .agenda .cardOne .week {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.agenda .cardOne .calendar .dayWeek, .agenda .cardOne .calendar .day{
+    height: 75px;
+    width: 75px;
+    cursor: pointer;
+    font-size: 25px;
+    background-color: transparent;
+    color: var(--primary-light);
+    transition: 0.2s ;
+}
+
+.agenda .cardOne .calendar .dayWeek:hover, .agenda .cardOne .calendar .day:hover{
+    color: var(--background-dark);
+    border-radius: 50%;
+    background-color: var(--primary-light);
+}
+
+.agenda .cardTwo{
+    display: none;
+    width: 35%;
+    background-color: var(--primary-dark);
+    box-shadow: 3px 3px 25px var(--primary-light);
+    border-radius: 0px 30px 30px 0px;
+    padding: 15px;
+}
+
+.cardTwo.active {
+    display: flex;
+    flex-direction: column;
+}
+
+.cardTwo .lembrete{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 0px 5px;
+}
+
+.cardTwo .close {
+    background-color: transparent;
+}
+
+.cardTwo .close i{
+    color: var(--text-dark);
+}
+
+.agenda .cardTwo h3{
+    position: relative;
+    top: 5px;
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    color: var(--text-dark);
+}
+
+.groupInputs .datetime{
+    display: flex;
+    justify-content: center;
+    background-color: var(--background-dark);
+    width: 100%;
+    outline: none;
+}
+.agenda .cardTwo .groupInputs input[type='date'], .groupInputs input[type='time'] {
+    font-size: 20px;
+    color: var(--text-dark);
+    background-color: transparent;
+}
+
+.semana{
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: var(--background-dark);
+}
+
+.semana span{
+    text-transform: uppercase;
+    font-weight: normal;
+}
+
+.agenda .cardTwo .groupInputs .campoInput{
+    display: flex;
+}
+
+.agenda .cardTwo .groupInputs input[type=text]{
+    width: 100%;
+    margin-top: 10px;
+    background-color: transparent;
+    color: var(--text-dark);
+    outline: none;
+    border-bottom: 1px solid var(--text-dark);
+    margin-bottom: 10px;
+    padding: 5px;
+    position: relative;
+}
+
+.agenda .cardTwo .groupInputs .save{
+    position: relative;
+    right: 20px;
+    background: none;
+    color: var(--text-dark);
+    cursor: pointer;
+    outline: none;
+}
+
+/* Tasks */
+.divTasks{
+    max-height: 250px;
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+.divTasks::-webkit-scrollbar {
+    width: 12px;
+}
+
+  .divTasks::-webkit-scrollbar-thumb {
+    background-color: var(--background-scrollbar-thumb);/* Cor da barra do scroll para navegadores WebKit */
+    border-radius: 7px;
+}
+  
+  .divTasks::-webkit-scrollbar-track {
+    background-color: var(--background-scrollbar-track); /* Cor do fundo do scroll para navegadores WebKit */
+    border-radius: 15px;
+    
+}
+
+.task {
+    max-width: 95%;
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    justify-items: flex-end;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+
+.task .taskWeek{
+    background-color: var(--primary-light);
+    color: var(--background-dark);
+    padding: 3px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.task .taskName {
+    font-size: 20px;
+    width: 100%;
+    word-wrap: break-word;
+}
+
+.date{
+    width: 100%;
+}
+
+.date span{
+    background-color: var(--primary-light);
+    color: var(--background-dark);
+    padding:  0 7px;
+    border-radius: 10px;
+}
+
+
+.delete{
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.delete i{
+    color: var(--primary-light);
+}
+
+
+/* Responsividade */
+
+@media screen and (max-width: 1211px){
+    .agenda{
+        width: 80%;
+    }
+    
+    .agenda .cardTwo{ 
+        width: 35%;
+    }
+}
+
+@media  screen and (max-width: 1061px) {
+    .agenda{
+        width: 90%;
+    }
+
+    .agenda .cardTwo{ 
+        width: 35%;
+    }
+}
+
+@media  screen and (max-width: 943px){
+    .agenda{
+        width: 100%;
+    }
+
+    .agenda .cardTwo{ 
+        width: 35%;
+    }
+}
+
+@media screen and (max-width: 849px) {
+    .switch {
+        top: 90%;
+        left: 90%;
+    }
+
+
+    .agenda {
+        flex-direction: column;
+        width: 90%;
+        
+    }
+
+    .cardTwo.active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 98%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .agenda .cardOne, .agenda .cardTwo {
+        width: 700px;
+        max-width: 100%;
+        border-radius: 30px;
+        margin-bottom: 20px;
+    }
+
+    .agenda .cardOne .calendar .containerDay .day, .calendar .week .dayWeek{
+        flex: 0 0 calc(15% - 10px); /* Divide igualmente em 7 colunas */
+    }
+
+    
+}
+
+@media screen and (max-width: 767px) {
+
+    .switch {
+        top: 90%;
+        left: 90%;
+    }
+
+    .agenda {
+        position: absolute;
+        flex-direction: column;
+        width: 90%;
+        margin: auto;
+    }
+
+    .agenda .cardOne, .agenda .cardTwo {
+        width: 100%;
+        border-radius: 30px;
+        margin-bottom: 20px;
+    }
+
+    .agenda .cardOne .calendar .containerDay .day, .calendar .week .dayWeek{
+        flex: 0 0 calc(16.1% - 10px); /* Divide igualmente em 7 colunas */
+    }
+
+    .agenda .cardOne {
+        max-width: 100%;
+    }
+
+    .agenda .cardTwo {
+        width: 100%; /* Ajuste o tamanho do cardTwo */
+        padding: 10px; /* Ajuste o preenchimento interno */
+    }
+
+    .divTasks{
+        min-height: 180px;
+    }
+
+    .task {
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+    }
+
+}
+
+@media screen and (max-width: 428px) {
+    .agenda {
+        padding: 2px;
+    }
+
+    .task {
+        font-size: 16px;
+    }
+}

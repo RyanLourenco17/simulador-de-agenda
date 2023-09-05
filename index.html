@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./Bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <button class="switch" id="switchTheme_Button">
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onclick="switchTheme()">
+        </div>
+    </button>
+    <div class="agenda">
+        <div class="cardOne">
+            <h3>Agenda</h3>
+            <div class="month">
+                <button id="prevMonth">
+                    <i class="bi bi-caret-left-fill">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                            <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                        </svg>
+                    </i>
+                </button>
+                <h4 id="currentMonth">Janeiro</h4>
+                <button id="nextMonth">
+                    <i class="bi bi-caret-right-fill">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                            <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                        </svg>
+                    </i>
+                </button>
+            </div>
+            <div class="calendar">
+                <div class="week">
+                    <button class="dayWeek">D</button>
+                    <button class="dayWeek">S</button>
+                    <button class="dayWeek">T</button>
+                    <button class="dayWeek">Q</button>
+                    <button class="dayWeek">Q</button>
+                    <button class="dayWeek">S</button>
+                    <button class="dayWeek">S</button>
+                </div>
+            
+                <div class="containerDay">
+                    <button class="day">1</button>
+                    <button class="day">2</button>
+                    <button class="day">3</button>
+                    <button class="day">4</button>
+                    <button class="day">5</button>
+                    <button class="day">6</button>
+                    <button class="day">7</button>
+                    <button class="day">8</button>
+                    <button class="day">9</button>
+                    <button class="day">10</button>
+                    <button class="day">11</button>
+                    <button class="day">12</button>
+                    <button class="day">13</button>
+                    <button class="day">14</button>
+                    <button class="day">15</button>
+                    <button class="day">16</button>
+                    <button class="day">17</button>
+                    <button class="day">18</button>
+                    <button class="day">19</button>
+                    <button class="day">20</button>
+                    <button class="day">21</button>
+                    <button class="day">22</button>
+                    <button class="day">23</button>
+                    <button class="day">24</button>
+                    <button class="day">25</button>
+                    <button class="day">26</button>
+                    <button class="day">27</button>
+                    <button class="day">28</button>
+                    <button class="day">29</button>
+                    <button class="day">30</button>
+                    <button class="day">31</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cardTwo">
+            <div class="lembrete">
+                <button class="close">
+                    <i class="bi bi-x-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                        </svg>
+                    </i>
+                </button>
+                <h3>Lembrete</h3>
+            </div>
+
+            <div class="groupInputs">
+                <div class="datetime">
+                    <input type="date" name="data" id="data">
+                    <input type="time" name="hora" id="hora">
+                </div>
+                <div class="divWeeks"></div>
+                <div class="campoInput">
+                    <input type="text" name="description" id="description"placeholder="Inserir tarefa">
+                    <button class="save">
+                        <i class="bi bi-plus-circle">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                            </svg>
+                        </i>
+                    </button>
+                </div>
+            </div>
+            <div class="divTasks"></div>
+        </div>
+
+        
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
