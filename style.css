@@ -27,12 +27,6 @@
     --primary-light: #01202b; 
 }
 
-/* --background-dark: #f0f0f0;
-  --background-light: #ffffff;
-  --text-dark: #333333;
-  --text-light: #e0e0e0;
-  --primary-dark: #ffcc80;
-  --primary-light: #ff7043; */
 
 .neonTheme {
     --background-dark: #2b2b2b;
@@ -48,19 +42,88 @@
 body{
     background-color: var(--background-dark);
     color: var(--text-dark);
-    height: auto;
+    display: flex;
+    justify-content: center;
+    margin: 5% 0;
+    overflow-x: hidden;
 }
 
+.doubt{
+    padding: 12px;
+    z-index: 2;
+    position: absolute;
+    margin: auto 0;
+    width: 70%;
+    display: none;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: end;
+    background-color:rgba(28, 28, 28, 0.9);
+    border-radius: 2%;
+}
+
+.doubt.activeDoubt{
+    display: flex;
+}
+
+.closeDoubt{
+    color: white;
+}
+
+.doubt .hiDario{
+    display: flex;
+    align-items: center;
+    
+}
+
+.doubt .mascote{
+    height: 100%;
+    width: 60%;
+}
+
+
+.doubt .greetings h2{
+    color: white;
+    text-align: center;
+}
+
+.doubt .greetings p{
+    color: white;
+    text-align: justify;
+    text-align-last: justify;
+    
+}
+
+.doubt .greetings  span{
+    color: white;
+}
 
 .switch{
-    z-index: 1;
+    z-index: 2;
     position: fixed;
-    top: 90%;
     left: 93%;
+    top: 90%;
     background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
-.switch .form-check{
+.btnShowMascotButton i svg{
+    height: 30px;
+    width: 30px;
+    color: var(--primary-light);
+    transition: 0.5s; 
+    border-radius: 50%;
+}
+
+
+.btnShowMascotButton i svg:hover{
+    
+    box-shadow: 3px 3px 25px var(--primary-light);
+}
+
+.switch .form-check, .switch, .btnShowMascotButton {
     background-color: transparent;
 }
 
@@ -73,11 +136,6 @@ body{
 }
 
 .agenda{
-    z-index: 0;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
     width: 70%;
     display: flex;
     padding: 20px;
@@ -93,10 +151,15 @@ body{
     border-radius: 30px 0px 0px 30px;
 }
 
+header {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
 .agenda .cardOne h3{
     position: relative;
     top: 10px;
-    text-transform: uppercase; 
     font-size: 25px;
     margin-left: 20px;
     margin-bottom: 20px;
@@ -133,18 +196,25 @@ body{
 
 .agenda .cardOne .calendar .dayWeek:hover, .agenda .cardOne .calendar .day:hover{
     color: var(--background-dark);
-    border-radius: 50%;
+    border-radius: 80%;
     background-color: var(--primary-light);
+}
+
+.containerDay .pastDay{
+    color: var(--primary-light);
+    opacity: 0.5;
 }
 
 .agenda .cardTwo{
     display: none;
-    width: 35%;
+    width: 40%;
     background-color: var(--primary-dark);
     box-shadow: 3px 3px 25px var(--primary-light);
     border-radius: 0px 30px 30px 0px;
     padding: 15px;
+    z-index: 1;
 }
+
 
 .cardTwo.active {
     display: flex;
@@ -159,7 +229,7 @@ body{
     padding: 0px 5px;
 }
 
-.cardTwo .close {
+.cardTwo .close, .closeDoubt {
     background-color: transparent;
 }
 
@@ -228,6 +298,8 @@ body{
 
 /* Tasks */
 .divTasks{
+    display: flex;
+    flex-direction: column-reverse;
     max-height: 250px;
     overflow-x: auto;
     margin-top: 20px;
@@ -300,12 +372,11 @@ body{
 
 
 /* Responsividade */
-
 @media screen and (max-width: 1211px){
     .agenda{
         width: 80%;
     }
-    
+
     .agenda .cardTwo{ 
         width: 35%;
     }
@@ -332,25 +403,14 @@ body{
 }
 
 @media screen and (max-width: 849px) {
-    .switch {
-        top: 90%;
-        left: 90%;
-    }
-
-
     .agenda {
         flex-direction: column;
         width: 90%;
-        
     }
 
     .cardTwo.active {
         display: flex;
         flex-direction: column;
-        position: absolute;
-        top: 98%;
-        left: 50%;
-        transform: translateX(-50%);
     }
 
     .agenda .cardOne, .agenda .cardTwo {
@@ -367,11 +427,29 @@ body{
     
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 767px){
 
-    .switch {
-        top: 90%;
-        left: 90%;
+    .doubt {
+        width: 90%;
+        padding: 8px;
+    }
+
+    .doubt .hiDario {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .doubt .mascote {
+        width: 100%;
+    }
+
+    .doubt .greetings h2 {
+        font-size: 18px;
+    }
+
+    .doubt .greetings p {
+        font-size: 14px;
     }
 
     .agenda {
@@ -413,6 +491,35 @@ body{
 }
 
 @media screen and (max-width: 428px) {
+
+    .switch {
+        top: 80%;
+        left: 80%;
+    }
+
+    .doubt {
+        margin-top: 50px;
+        padding: 5px;
+    }
+
+    .doubt .greetings h2 {
+        font-size: 16px;
+    }
+
+    .doubt .greetings p {
+        font-size: 12px;
+    }
+
+    .btnShowMascotButton i svg {
+        height: 25px;
+        width: 25px;
+    }
+
+    .switch {
+        top: 90%;
+        left: 80%;
+    }
+
     .agenda {
         padding: 2px;
     }
@@ -420,4 +527,21 @@ body{
     .task {
         font-size: 16px;
     }
+}
+
+@media screen and (min-width: 428px){
+    .switch {
+        top: 85%;
+        left: 90%;
+    }
+    .agenda{
+        width: 70%;
+    }
+}
+
+@media screen and (min-width: 805px){
+    .agenda{
+        width: 100%;
+    }
+
 }

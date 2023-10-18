@@ -7,7 +7,10 @@ const time = document.getElementById("hora");
 const desc = document.getElementById("description");
 const task = document.querySelector(".divTasks")
 const btnSubmit = document.querySelector(".save");
-const btnClose = document.querySelector(".close")
+const btnShowMascotButton = document.querySelector(".bi-question-circle");
+const doubt = document.querySelector(".doubt")
+const btnClose = document.querySelector(".close");
+const btnCloseDoubt = document.querySelector(".closeDoubt");
 
 // FUNÇÃO PARA TROCAR O TEMA
 function switchTheme() {
@@ -24,7 +27,7 @@ const months = [
 ];
 
 // Índice do mês atual
-let currentMonthIndex = 0;
+let currentMonthIndex = new Date().getMonth();
 
 // Elemento HTML que exibe o mês atual
 const currentMonthElement = document.getElementById('currentMonth');
@@ -36,20 +39,23 @@ const nextMonthButton = document.getElementById('nextMonth');
 // Atualiza o mês exibido no elemento HTML
 function updateCurrentMonth() {
     currentMonthElement.textContent = months[currentMonthIndex];
+    
 }
 
 // Listener de evento para retroceder o mês
 prevMonthButton.addEventListener('click', () => {
     currentMonthIndex = (currentMonthIndex - 1 + 12) % 12;
     updateCurrentMonth();
-    currentDate = updateCurrentDate();
+    const currentDate = updateCurrentDate();
+    renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
 });
 
 // Listener de evento para avançar o mês
 nextMonthButton.addEventListener('click', () => {
     currentMonthIndex = (currentMonthIndex + 1) % 12;
     updateCurrentMonth();
-    currentDate = updateCurrentDate();
+    const currentDate = updateCurrentDate();
+    renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
 });
 
 // Inicializa o mês atual
@@ -66,27 +72,6 @@ function updateCurrentDate() {
 btnClose.addEventListener('click', () => {
     // Remove a classe 'active' do elemento com a classe 'cardTwo'
     card.classList.remove('active');
-});
-
-// FUNÇÃO DE ESCOLHER O DIA DO MÊS
-btnDays.forEach(button => {
-    button.addEventListener('click', () => {
-        // Adiciona a classe 'active' ao elemento com a classe 'cardTwo'
-        card.classList.add('active');
-        button.classList.add('active');
-
-        // Obtém o valor do dia do botão clicado
-        const day = button.textContent;
-
-        // Obtém a data atual
-        let currentDate = updateCurrentDate();
-        let currentHour = new Date();
-
-        // Define a data no campo "data" para o dia clicado e a hora atual
-        date.value = currentDate.getFullYear() + '-' + ("0" + (currentDate.getMonth() + 1)).slice(-2) + '-' + ("0" + day).slice(-2);
-        
-        time.value = `${currentHour.getHours().toString().padStart(2, '0')}:${currentHour.getMinutes().toString().padStart(2, '0')}`;
-    });
 });
 
 // FUNÇÃO DE ESCOLHER O DIA DA SEMANA
@@ -110,17 +95,62 @@ function isAnyButtonClicked(target) {
     return false;
 }
 
-//FUNÇÃO ENTER
-desc.addEventListener('keydown', function (event) {
-    // Verifique se a tecla pressionada é "Enter" (código 13)
-    if (event.keyCode === 13) {
-        // Impede que o formulário seja enviado (comportamento padrão)
-        event.preventDefault();
+// FUNÇÃO PARA SALVAR VALORES NO LOCALSTORAGE
+function saveToLocalStorage(taskData) {
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-        // Chame a função para salvar a tarefa
-        saveTask();
+    tasks.push(taskData);
+
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+// FUNÇÃO PARA CARREGAR TAREFAS DO LOCALSTORAGE
+function loadTasksFromLocalStorage() {
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+    tasks.forEach(taskData => {
+        task.innerHTML += `
+        <div class="task">
+            <p class="taskName">
+                ${taskData.description}
+            </p>
+
+            <p class="date">
+                Tarefa a ser realizada em: <span>${taskData.date}</span> às: <span>${taskData.time}</span>;
+            </p>
+
+            <p class="taskWeek">
+                ${taskData.weekDay}
+            </p>
+
+            <button class="delete">
+                <i class="bi bi-trash3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                    </svg>
+                </i>
+            </button>
+        </div> `;
+    });
+
+    // Adicione o event listener para os botões de exclusão
+    const removeTask = document.querySelectorAll(".delete");
+    for (let i = 0; i < removeTask.length; i++) {
+        removeTask[i].onclick = function () {
+            const taskIndex = i; // Índice da tarefa a ser removida
+            const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            tasks.splice(taskIndex, 1); // Remove a tarefa do array
+            localStorage.setItem('tasks', JSON.stringify(tasks)); // Atualiza o localStorage
+
+            // Remove a tarefa do DOM
+            this.parentNode.remove();
+        };
     }
-});
+}
+
+
+// Chama a função para carregar tarefas do localStorage quando a página for recarregada
+window.addEventListener('load', loadTasksFromLocalStorage);
 
 // FUNÇÃO PARA SALVAR VALORES
 function saveTask() {
@@ -147,7 +177,13 @@ function saveTask() {
         alert(errorMessage);
     } else {
         const inputDate = new Date(date.value);
-        const formattedDate = `${("0" + inputDate.getDate()).slice(-2)}/${("0" + (inputDate.getMonth() + 1)).slice(-2)}/${inputDate.getFullYear()}`;
+
+        // Solução do Bug de regressão de dia;
+        const regressaoDeDia = inputDate.getDate();
+        const solucaoRegressaoDeDia = regressaoDeDia + 1;
+        const formattedDate = `${("0" + solucaoRegressaoDeDia).slice(-2)}/${
+        ("0" + (inputDate.getMonth() + 1)).slice(-2)}/${
+        inputDate.getFullYear()}`
 
         const [inputHours, inputMinutes] = time.value.split(':');
 
@@ -156,6 +192,18 @@ function saveTask() {
         inputHour.setMinutes(inputMinutes);
 
         const formattedHour = `${inputHour.getHours().toString().padStart(2, '0')}:${inputHour.getMinutes().toString().padStart(2, '0')}`;
+
+        const taskData = {
+            description: desc.value,
+            date: formattedDate,
+            time: formattedHour,
+            weekDay: selectedWeek
+        };
+
+        // Salva os dados no localStorage
+        saveToLocalStorage(taskData);
+
+        // Renderiza a tarefa na interface do usuário
 
         task.innerHTML += `
         <div class="task">
@@ -185,21 +233,88 @@ function saveTask() {
         date.value = '';
         time.value = '';
         weeks.innerHTML = '';
-
-        // Adiciona um ouvinte de evento para o botão de exclusão dentro da nova tarefa
-        const current_tasks = document.querySelectorAll(".delete");
-        current_tasks[current_tasks.length - 1].addEventListener('click', function () {
-            this.parentNode.remove();
-        });
+        selectedWeek = '';
     }
 }
+
+//FUNÇÃO ENTER
+desc.addEventListener('keydown', function (event) {
+    // Verifique se a tecla pressionada é "Enter" (código 13)
+    if (event.keyCode === 13) {
+        // Impede que o formulário seja enviado (comportamento padrão)
+        event.preventDefault();
+
+        // Chame a função para salvar a tarefa
+        saveTask();
+    }
+});
 
 // Listener de evento para salvar tarefas ao clicar no botão
 btnSubmit.addEventListener('click', saveTask);
 
-// Listener de evento para salvar tarefas ao pressionar a tecla "Enter"
-document.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-        saveTask();
+// FUNÇÃO PARA CARREGAR O CALENDÁRIO
+function loadCalendar() {
+    const currentDate = new Date(); // Obtém a data atual
+    const currentYear = currentDate.getFullYear(); // Obtém o ano atual
+    const currentMonth = currentDate.getMonth(); // Obtém o mês atual
+
+    // Renderiza o calendário com base no ano e mês atuais
+    renderCalendar(currentYear, currentMonth);
+}
+
+// Chama a função para carregar o calendário quando a página for recarregada
+window.addEventListener('load', loadCalendar);
+
+// Função para renderizar o calendário com base no ano e mês fornecidos
+function renderCalendar(year, month) {
+    const containerDay = document.querySelector('.containerDay');
+    containerDay.innerHTML = ''; // Limpa o conteúdo atual do calendário
+
+    const firstDayOfMonth = new Date(year, month, 1);
+    const lastDayOfMonth = new Date(year, month + 1, 0);
+    const daysInMonth = lastDayOfMonth.getDate();
+
+    const startingDayOfWeek = firstDayOfMonth.getDay(); // 0 (Domingo) a 6 (Sábado)
+
+    // Obtém o último dia do mês anterior
+    const lastDayOfPreviousMonth = new Date(year, month, 0);
+    const daysInLastMonth = lastDayOfPreviousMonth.getDate();
+
+    // Preenche os dias vazios no início do calendário com os últimos dias do mês anterior
+    for (let i = 0; i < startingDayOfWeek; i++) {
+        const day = daysInLastMonth - startingDayOfWeek + i + 1;
+        const emptyDay = document.createElement('button');
+        emptyDay.classList.add('day', 'pastDay');
+        emptyDay.textContent = day;
+        containerDay.appendChild(emptyDay);
     }
+    
+    // Preenche os dias do mês
+    for (let day = 1; day <= daysInMonth; day++) {
+        const calendarDay = document.createElement('button');
+        calendarDay.classList.add('day');
+        calendarDay.textContent = day;
+        containerDay.appendChild(calendarDay);
+
+        calendarDay.addEventListener('click', () => {
+            // Adiciona a classe 'active' ao elemento com a classe 'cardTwo'
+            card.classList.add('active');
+            calendarDay.classList.add('active');
+
+            // VERIFICAR VERIFICAR
+            // Define a data no campo "data" para o dia clicado e a hora atual
+            date.value = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`; 
+            const currentHour = new Date();
+            time.value = `${currentHour.getHours().toString().padStart(2, '0')}:${currentHour.getMinutes().toString().padStart(2, '0')}`;
+        });
+    }
+}
+
+// FUNÇÃO DOUBT
+btnShowMascotButton.addEventListener('click', () => {
+    doubt.classList.add('activeDoubt');
+});
+
+btnCloseDoubt.addEventListener('click', () => {
+    doubt.classList.remove('activeDoubt');
 });
